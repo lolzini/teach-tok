@@ -1,16 +1,27 @@
 ---
+import { getCollection } from "astro:content";
 
+import Layout from "@/components/layout.astro";
+import Main from "@/components/main.astro";
+import TiktokEmbed from "@/components/tiktok-embed.astro";
+
+const allCreators = await getCollection("creators");
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Main>
+    <section>
+      <h2>Descubre el mejor contenido educativo de TikTok</h2>
+    </section>
+    {
+      allCreators.map((creator) => {
+        return (
+          <article>
+            <p>{creator.data.name}</p>
+            <TiktokEmbed username={creator.data.username} />
+          </article>
+        );
+      })
+    }
+  </Main>
+</Layout>

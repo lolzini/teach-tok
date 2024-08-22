@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  username: CollectionEntry<"creators">["data"]["username"];
+}
+
+const { username } = Astro.props;
+---
+
+<blockquote
+  class="tiktok-embed"
+  cite=`https://www.tiktok.com/@${username}`
+  data-unique-id=`${username}`
+  data-embed-from="embed_page"
+  data-embed-type="creator"
+  style="max-width:780px; min-width:288px;"
+>
+  <section>
+    <a
+      target="_blank"
+      href=`https://www.tiktok.com/@${username}?refer=creator_embed`
+      >@{username}</a
+    >
+  </section>
+</blockquote>
