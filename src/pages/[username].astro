@@ -1,0 +1,35 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+import TiktokEmbed from "@/components/tiktok-embed.astro";
+import Layout from "@/components/layout.astro";
+import Main from "@/components/main.astro";
+
+interface Props {
+  data: CollectionEntry<"creators">["data"];
+}
+
+export const getStaticPaths = (async () => {
+  const allCreators: CollectionEntry<"creators">[] =
+    await getCollection("creators");
+
+  return allCreators.map((creator) => ({
+    params: { username: creator.data.username },
+    props: { data: creator.data },
+  }));
+}) satisfies GetStaticPaths;
+
+const { data } = Astro.props;
+---
+
+<Layout>
+  <Main>
+    <h1>@{data.username}</h1>
+    <h2>{data.topic}</h2>
+    <div class="flex gap-2">
+      {data.tags.map((tag) => <span class="btn btn-sm">{tag}</span>)}
+    </div>
+    <TiktokEmbed username={data.username} />
+  </Main>
+</Layout>

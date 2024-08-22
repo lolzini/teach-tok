@@ -1,27 +1,28 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 import Layout from "@/components/layout.astro";
 import Main from "@/components/main.astro";
-import TiktokEmbed from "@/components/tiktok-embed.astro";
 
-const allCreators = await getCollection("creators");
+const allCreators: CollectionEntry<"creators">[] =
+  await getCollection("creators");
 ---
 
 <Layout>
   <Main>
     <section>
-      <h2>Descubre el mejor contenido educativo de TikTok</h2>
+      <h2>Creadores</h2>
+      <div class="flex gap-2">
+        {
+          allCreators.map((creator) => {
+            return (
+              <a class="btn btn-sm" href={creator.data.username}>
+                {creator.data.username}
+              </a>
+            );
+          })
+        }
+      </div>
     </section>
-    {
-      allCreators.map((creator) => {
-        return (
-          <article>
-            <p>{creator.data.name}</p>
-            <TiktokEmbed username={creator.data.username} />
-          </article>
-        );
-      })
-    }
   </Main>
 </Layout>
