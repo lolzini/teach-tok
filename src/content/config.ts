@@ -7,10 +7,7 @@ const creatorsCollection = defineCollection({
   schema: z.object({
     username: z.string(),
     topic: z.enum(Object.values(TOPICS) as [string, ...string[]]),
-    tags: z.union([
-      z.enum(Object.values(TAGS) as [string, ...string[]]),
-      z.enum(Object.values(TAGS) as [string, ...string[]]).array(),
-    ]),
+    tags: z.enum(Object.values(TAGS) as [string, ...string[]]).array(),
     createdAt: z.date(),
     updatedAt: z.date().optional(),
   }),
